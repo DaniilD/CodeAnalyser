@@ -1,0 +1,69 @@
+array(
+    0: Stmt_Function(
+        attrGroups: array(
+        )
+        byRef: false
+        name: Identifier(
+            name: test
+        )
+        params: array(
+            0: Param(
+                attrGroups: array(
+                )
+                flags: 0
+                type: null
+                byRef: false
+                variadic: false
+                var: Expr_Variable(
+                    name: foo
+                )
+                default: null
+            )
+        )
+        returnType: null
+        stmts: array(
+            0: Stmt_Expression(
+                expr: Expr_Assign(
+                    var: Expr_Variable(
+                        name: a
+                    )
+                    expr: Scalar_LNumber(
+                        value: 1
+                    )
+                )
+            )
+            1: Stmt_Expression(
+                expr: Expr_Assign(
+                    var: Expr_Variable(
+                        name: b
+                    )
+                    expr: Scalar_String(
+                        value: 1
+                    )
+                )
+            )
+            2: Stmt_If(
+                cond: Expr_BinaryOp_Equal(
+                    left: Expr_Variable(
+                        name: a
+                    )
+                    right: Expr_Variable(
+                        name: b
+                    )
+                )
+                stmts: array(
+                    0: Stmt_Echo(
+                        exprs: array(
+                            0: Expr_Variable(
+                                name: b
+                            )
+                        )
+                    )
+                )
+                elseifs: array(
+                )
+                else: null
+            )
+        )
+    )
+)
