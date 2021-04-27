@@ -12,20 +12,16 @@ $code       = <<<'CODE'
     
         public function test() {
            
-           if (1 == $this->getVar()){
+           if (1 == "1"){
             
            }
-        }
-        
-        public function getVar() {
-            return "a";
         }
     }
 CODE;
 $errorFiles = [];
 $parser     = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-$ast       = $parser->parse($code);
-var_dump($ast); die;
+//$ast       = $parser->parse($code);
+//var_dump($ast); die;
 
 
 function scan($parser, string $path)
@@ -48,14 +44,19 @@ function scan($parser, string $path)
 function parse($parser, $file)
 {
     try {
-        var_dump($file);
         $ast       = $parser->parse(file_get_contents($file));
         $traverser = new NodeTraverser();
         $visitor   = new \App\Visitor();
         $traverser->addVisitor($visitor);
 
         $ast = $traverser->traverse($ast);
-        var_dump($visitor->getErrorList());
+
+        if(count($visitor->getErrorList()) > 0) {
+            echo "FILE: {$file} \n";
+            foreach ($visitor->getErrorList() as $error) {
+                echo "LINE {$error['line']}: Error in function \"{$error['function']}\", variable type mismatch {$error['leftVar']} and {$error['rightVar']}. \n";
+            }
+        }
     }
     catch (Error $error) {
         echo "Parse error: {$error->getMessage()}\n";
@@ -64,4 +65,7 @@ function parse($parser, $file)
     }
 }
 
-scan($parser, "./src");
+$path = $argv[1];
+//scan($parser, "../bronevik/core/src");
+//scan($parser, "./src");
+scan($parser, $path);
